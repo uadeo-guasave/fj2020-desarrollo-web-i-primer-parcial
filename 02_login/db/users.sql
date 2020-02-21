@@ -23,3 +23,6 @@ update users
 set firstname = 'Nombres',
     lastname = 'Apellidos'
 where id = 1;
+
+create user 'user'@'localhost' identified by '123';
+grant all on demo.* to 'user'@'localhost';
