@@ -11,20 +11,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // abrir una conexion a mysql
         $cnn = new MyConnection();
         // definir la consulta
-        $sql = sprintf("select name,email,firstname,lastname from users where name='%s' and passwd='%s'", $username, $userpassword);
+        $sql = sprintf("select name,email,firstname,lastname from users where name='%s' and passwd=sha('%s')", $username, $userpassword);
         // ejecutar la consulta
         $rst = $cnn->query($sql);
         // cerrar la conexion
         $cnn->close();
         // evaluar el resultado
         if (!$rst) {
-            // TODO: manejar el error de la ejecución de la consulta
-        } else {
-            // TODO: manejar la respuesta de la base de datos
+            // manejar el error de la ejecución de la consulta
+            echo json_encode(['error' => 'Error al ejecutar la consulta: '.$sql]);
+        } elseif ($rst->num_rows == 1) {
+            // manejar la respuesta de la base de datos
             // para preparar lo que se enviará al frontend
+            // La respuesta esperada aqui es un objeto de tipo mysqli_result
+            $usuario = $rst->fetch_assoc();
+            echo json_encode(['data' => $usuario]);
+        } else {
+            echo json_encode(['respuesta' => 'Usuario incorrecto.']);
         }
-    
-        echo json_encode(['usuario' => $username, 'contrasenia' => $userpassword]);
     } else {
         echo json_encode(['error' => 'no se recibieron todos los valores']);
     }

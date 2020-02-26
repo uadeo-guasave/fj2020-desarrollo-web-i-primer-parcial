@@ -1,6 +1,7 @@
 <?php
 class MyConnection extends mysqli {
     public function __construct() {
-        parent::__construct('127.0.0.1', 'root', '123', 'demo', 3308);
+        // host, user, passwd, dbname, port
+        parent::__construct('127.0.0.1', 'demo', '123', 'demo', 3308);
     }
 }
