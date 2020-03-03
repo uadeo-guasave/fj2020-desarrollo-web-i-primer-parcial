@@ -2,6 +2,7 @@
 require_once '../lib/myconnection.php';
 
 header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: http://localhost:8000');
 // Revisar el método utilizado en la petición
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['username']) && isset($_POST['userpasswd'])) {
@@ -27,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $usuario = $rst->fetch_assoc();
             echo json_encode(['data' => $usuario]);
         } else {
-            echo json_encode(['respuesta' => 'Usuario incorrecto.']);
+            echo json_encode(['data' => ['error' => 'Usuario y/o contraseña incorrectos.']]);
         }
     } else {
         echo json_encode(['error' => 'no se recibieron todos los valores']);
