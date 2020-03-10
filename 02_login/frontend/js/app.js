@@ -13,7 +13,8 @@ function validarUsuario(u, c) {
         { username: u, userpasswd: c },
         function (d) {
             if (typeof d.data.error == 'undefined') {
-                alert('Hola ' + d.data.firstname);
+                // alert('Hola ' + d.data.firstname);
+                window.location.replace('http://localhost:8000/home.php');
             } else {
                 alert('Error: ' + d.data.error);
             }
